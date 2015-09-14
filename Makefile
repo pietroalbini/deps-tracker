@@ -3,7 +3,7 @@
 # Copyright (c) 2015 Pietro Albini <pietro@pietroalbini.io>
 # Released under the MIT license
 
-.PHONY: build install devel clean
+.PHONY: build install devel lint clean help
 
 
 # Package build
@@ -38,11 +38,24 @@ devel: deps_tracker.egg-info
 build/envs/devel:
 	@rm -rf build/envs/devel
 	@mkdir -p build/envs/devel
-	virtualenv -p python3 build/envs/devel
+	@virtualenv -p python3 build/envs/devel
 
 deps_tracker.egg-info: build/envs/devel setup.py
-	build/envs/devel/bin/pip install -e .
+	@build/envs/devel/bin/pip install -e .
 	@touch deps_tracker.egg-info
+
+
+# Lint
+
+lint: build/envs/lint
+	@build/envs/lint/bin/flake8 deps_tracker
+
+build/envs/lint: requirements-lint.txt
+	@rm -rf build/envs/lint
+	@mkdir -p build/envs/lint
+	@virtualenv -p python3 build/envs/lint
+	@build/envs/lint/bin/pip install -U pip
+	@build/envs/lint/bin/pip install -r requirements-lint.txt
 
 
 # Cleanup
@@ -59,4 +72,5 @@ help:
 	@echo "- build       Create the .tar.gz and .whl packages"
 	@echo "- install     Install deps-tracker in the current environment"
 	@echo "- devel       Setup the development environment"
+	@echo "- lint        Check for code quality"
 	@echo "- clean       Clean up the source directory"
