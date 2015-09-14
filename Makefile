@@ -45,6 +45,22 @@ deps_tracker.egg-info: build/envs/devel setup.py
 	@touch deps_tracker.egg-info
 
 
+# Documentation
+
+docs: build/docs
+
+build/envs/docs: requirements-docs.txt
+	@rm -rf build/envs/docs
+	@mkdir -p build/envs/docs
+	virtualenv -p python3 build/envs/docs
+	build/envs/docs/bin/pip install -U pip
+	build/envs/docs/bin/pip install -r requirements-docs.txt
+
+build/docs: build/envs/docs docs/**
+	@rm -rf build/docs
+	build/envs/docs/bin/buildthedocs docs/buildthedocs.yml -o build/docs
+
+
 # Lint
 
 lint: build/envs/lint
