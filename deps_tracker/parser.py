@@ -6,14 +6,22 @@
     Released under the MIT license
 """
 
+import glob
 import re
 import os
+import subprocess
+import shutil
+import tempfile
 
 
 _line_re = re.compile(r'^([a-zA-Z0-9\-_\.]+)((===?|>=?|<=?|~=).*)?$')
 
 
 class InvalidLineError(Exception):
+    pass
+
+
+class FailedSetupCall(Exception):
     pass
 
 
@@ -60,3 +68,34 @@ def parse_requirements(path):
             pass
 
     return result
+
+
+def parse_setup(path):
+    """Parse a setup.py file"""
+    path = os.path.expanduser(path)
+
+    tempdir = tempfile.mkdtemp()
+    try:
+        res = subprocess.call(["python3", path, "egg_info", "-e", tempdir],
+                              stdout=subprocess.DEVNULL,
+                              stderr=subprocess.DEVNULL)
+
+        # Return code != 0 means something went wrong
+        if res != 0:
+            raise FailedSetupCall("setup.py returned non-zero error code")
+
+        # Since it's a new directory the only sub-directory should be the one
+        # created by setuptools
+        requirements = glob.glob(os.path.join(tempdir, "*", "requires.txt"))[0]
+        with open(requirements) as f:
+            content = f.read()
+
+        result = []
+        for line in content.split("\n"):
+            result.append(_parse_line(line))
+
+        return result
+
+    # Be sure to remove the temp directory
+    finally:
+        shutil.rmtree(tempdir)
