@@ -15,6 +15,7 @@ setuptools.setup(
 
     install_requires = [
         'packaging',
+        'requests',
         'setuptools',
         'jinja2',
         'pyyaml',

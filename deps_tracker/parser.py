@@ -25,7 +25,25 @@ class FailedSetupCall(Exception):
     pass
 
 
-def _parse_line(line):
+def _get_filename(path, base):
+    """Get a filename relative to ``base``"""
+    path = os.path.abspath(path)
+    base = os.path.abspath(base)
+
+    # path must be a subdirectory of base
+    if not path.startswith(base):
+        return None
+
+    # Normalize base
+    if base[-1] != "/":
+        base = base+"/"
+    elif base == "/":
+        base = ""
+
+    return path[len(base):]
+
+
+def _parse_line(line, filename=""):
     """Return all the information contained in a specific line"""
     line = line.strip()  # Remove some whitespaces
 
@@ -39,12 +57,18 @@ def _parse_line(line):
     if len(result) > 1:
         specifier = result[1]
 
-    return {"package": package, "specifier": specifier}
+    return {"package": package, "specifier": specifier, "file": filename}
 
 
-def parse_requirements(path):
+def parse_requirements(path, base="/"):
     """Parse a requirements file"""
     path = os.path.expanduser(path)
+    base = os.path.expanduser(base)
+
+    filename = _get_filename(path, base)
+    if filename is None:
+        raise ValueError("%s is not a subdirectory of %s" % (path, base))
+
     with open(path) as f:
         content = f.read()
 
@@ -63,16 +87,21 @@ def parse_requirements(path):
             line = line.split("#", 1)[0]
 
         try:
-            result.append(_parse_line(line))
+            result.append(_parse_line(line, filename))
         except InvalidLineError:
             pass
 
     return result
 
 
-def parse_setup(path):
+def parse_setup(path, base="/"):
     """Parse a setup.py file"""
     path = os.path.expanduser(path)
+    base = os.path.expanduser(base)
+
+    filename = _get_filename(path, base)
+    if filename is None:
+        raise ValueError("%s is not a subdirectory of %s" % (path, base))
 
     tempdir = tempfile.mkdtemp()
     try:
@@ -92,7 +121,7 @@ def parse_setup(path):
 
         result = []
         for line in content.split("\n"):
-            result.append(_parse_line(line))
+            result.append(_parse_line(line, filename))
 
         return result
 
