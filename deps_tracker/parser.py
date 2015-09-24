@@ -43,24 +43,24 @@ def _get_filename(path, base):
     return path[len(base):]
 
 
-def _parse_line(line, filename=""):
+def _parse_line(line, filename="", project=None):
     """Return all the information contained in a specific line"""
     line = line.strip()  # Remove some whitespaces
 
     parsed = _line_re.match(line)
     if parsed is None:
-        raise InvalidLineError("Line doesn't match")
+        raise InvalidLineError("Line '%s' doesn't match" % line)
 
     result = parsed.groups()
     package = result[0]
-    specifier = None
     if len(result) > 1:
         specifier = result[1]
 
-    return {"package": package, "specifier": specifier, "file": filename}
+    return {"package": package, "project": project, "specifier": specifier,
+            "file": filename}
 
 
-def parse_requirements(path, base="/"):
+def parse_requirements(path, base="/", project=None):
     """Parse a requirements file"""
     path = os.path.expanduser(path)
     base = os.path.expanduser(base)
@@ -87,14 +87,14 @@ def parse_requirements(path, base="/"):
             line = line.split("#", 1)[0]
 
         try:
-            result.append(_parse_line(line, filename))
+            result.append(_parse_line(line, filename, project))
         except InvalidLineError:
             pass
 
     return result
 
 
-def parse_setup(path, base="/"):
+def parse_setup(path, base="/", project=None):
     """Parse a setup.py file"""
     path = os.path.expanduser(path)
     base = os.path.expanduser(base)
@@ -121,7 +121,11 @@ def parse_setup(path, base="/"):
 
         result = []
         for line in content.split("\n"):
-            result.append(_parse_line(line, filename))
+            # Ignore empty lines
+            if line.strip() == "":
+                continue
+
+            result.append(_parse_line(line, filename, project))
 
         return result
 

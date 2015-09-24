@@ -9,7 +9,9 @@
 import datetime
 
 import requests
-import packaging.specifiers
+from packaging import specifiers
+
+from . import parser
 
 
 PYPI_URL = "https://pypi.python.org/pypi"
@@ -27,6 +29,8 @@ class Dependency:
         self.needed_by = {}
         self.requires_updates = {}
 
+        self._needed_by_raw = []
+
         self.latest_update = -1
         self.latest_release = None
 
@@ -34,20 +38,27 @@ class Dependency:
 
     def add_requirement(self, requirement):
         """Add a thing which requires this dependency"""
-        package = requirement["package"]
-        specifier = packaging.specifiers.Specifier(requirement["specifier"])
         file = requirement["file"]
+        project = requirement["project"]
 
-        if package not in self.needed_by:
-            self.needed_by[package] = {}
+        specifier = None
+        if requirement["specifier"] is not None:
+            specifier = specifiers.Specifier(requirement["specifier"])
 
-        self.needed_by[package][file] = specifier
+        if project not in self.needed_by:
+            self.needed_by[project] = {}
+
+        self.needed_by[project][file] = specifier
+        self._needed_by_raw.append(requirement)
+
+        if specifier is None:
+            return
 
         # Update the self.requires_updates
         if self.latest_release not in specifier:
-            if package not in self.requires_updates:
-                self.requires_updates[package] = []
-            self.requires_updates[package].append()
+            if project not in self.requires_updates:
+                self.requires_updates[project] = []
+            self.requires_updates[project].append(file)
 
     def get_status(self):
         """Get the dependency status from PyPI"""
@@ -60,3 +71,74 @@ class Dependency:
         uploaded = content["releases"][self.latest_release][0]["upload_time"]
         converted = datetime.datetime.strptime(uploaded, "%Y-%m-%dT%H:%M:%S")
         self.latest_update = converted.timestamp()
+
+
+def track_requirements_file(path, base="/", project=None):
+    """Track a requirements.txt file"""
+    parsed = parser.parse_requirements(path, base, project)
+    return _track_parsed(parsed)
+
+
+def track_setup_file(path, base="/", project=None):
+    """Track dependencies in a setup.py file"""
+    parsed = parser.parse_setup(path, base, project)
+    return _track_parsed(parsed)
+
+
+def _track_parsed(parsed):
+    """Actually do the tracking"""
+    deps = {}
+
+    for requirement in parsed:
+        if requirement["package"] not in deps:
+            deps[requirement["package"]] = Dependency(requirement["package"])
+
+        deps[requirement["package"]].add_requirement(requirement)
+
+    return deps
+
+
+def merge_results(*results):
+    """Merge multiple results you got"""
+    packages = {}
+    result = {}
+
+    # First of all merge togheter all the results
+    for result in results:
+        for name, package in result.items():
+            if name not in packages:
+                packages[name] = []
+            packages[name].append(package)
+
+    # And then merge the Dependency objects
+    for name, deps in packages.items():
+        result[name] = merge_dependency(*deps)
+
+    return result
+
+
+def merge_dependency(*deps):
+    """Merge together multiple Dependency objects"""
+    package = None
+    dependency = None
+
+    # Some optimizations
+    if not len(deps):
+        return None
+    elif len(deps) == 1:
+        return deps[0]
+
+    for dep in deps:
+        # Initialize the Dependency the first iteration
+        if package is None:
+            package = dep.package
+            dependency = Dependency(package)
+
+        # Merge only the same dependency
+        if dep.package != package:
+            raise ValueError("Can't merge Dependency of different packages!")
+
+        for requirement in dep._needed_by_raw:
+            dependency.add_requirement(requirement)
+
+    return dependency
