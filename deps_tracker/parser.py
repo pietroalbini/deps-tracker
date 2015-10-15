@@ -107,7 +107,8 @@ def parse_setup(path, base="/", project=None):
     try:
         res = subprocess.call(["python3", path, "egg_info", "-e", tempdir],
                               stdout=subprocess.DEVNULL,
-                              stderr=subprocess.DEVNULL)
+                              stderr=subprocess.DEVNULL,
+                              cwd=os.path.dirname(os.path.abspath(path)))
 
         # Return code != 0 means something went wrong
         if res != 0:
