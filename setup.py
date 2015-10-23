@@ -20,6 +20,8 @@ setuptools.setup(
         'jinja2',
         'pyyaml',
         'click',
+        'csscompressor',
+        'django-htmlmin',
     ],
 
     packages = [
