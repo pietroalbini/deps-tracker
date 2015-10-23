@@ -35,9 +35,9 @@
                                 <li>
                                     <b>{{ project }}</b> needs to be updated on
                                     {% for file in files %}
-                                        {% if loop.revindex == 1 %}
+                                        {% if loop.revindex == 2 %}
                                             {% set suffix = " and " %}
-                                        {% elif loop.revindex == 0 %}
+                                        {% elif loop.revindex == 1 %}
                                             {% set suffix = "" %}
                                         {% else %}
                                             {% set suffix = ", " %}
