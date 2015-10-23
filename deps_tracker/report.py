@@ -12,7 +12,6 @@ import tempfile
 import shutil
 import glob
 import base64
-import datetime
 import time
 
 import yaml
