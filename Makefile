@@ -1,4 +1,4 @@
-# BuildTheDocs's makefile
+# trackdeps's makefile
 #
 # Copyright (c) 2015 Pietro Albini <pietro@pietroalbini.io>
 # Released under the MIT license
@@ -16,11 +16,11 @@ build/envs/build: requirements-build.txt
 	virtualenv -p python3 build/envs/build
 	build/envs/build/bin/pip install -r requirements-build.txt
 
-build/packages/*.tar.gz: build/envs/build deps_tracker/** setup.py
+build/packages/*.tar.gz: build/envs/build trackdeps/** setup.py
 	@rm -f build/packages/*.tar.gz
 	build/envs/build/bin/python3 setup.py sdist -d build/packages
 
-build/packages/*.whl: build/envs/build deps_tracker/** setup.py
+build/packages/*.whl: build/envs/build trackdeps/** setup.py
 	@rm -rf build/packages/*.whl
 	build/envs/build/bin/python3 setup.py bdist_wheel -d build/packages
 
@@ -33,16 +33,16 @@ install: build/packages/*.whl
 
 # Development tools
 
-devel: deps_tracker.egg-info
+devel: trackdeps.egg-info
 
 build/envs/devel:
 	@rm -rf build/envs/devel
 	@mkdir -p build/envs/devel
 	@virtualenv -p python3 build/envs/devel
 
-deps_tracker.egg-info: build/envs/devel setup.py
+trackdeps.egg-info: build/envs/devel setup.py
 	@build/envs/devel/bin/pip install -e .
-	@touch deps_tracker.egg-info
+	@touch trackdeps.egg-info
 
 
 # Documentation
@@ -64,7 +64,7 @@ build/docs: build/envs/docs docs/**
 # Lint
 
 lint: build/envs/lint
-	@build/envs/lint/bin/flake8 deps_tracker
+	@build/envs/lint/bin/flake8 trackdeps
 
 build/envs/lint: requirements-lint.txt
 	@rm -rf build/envs/lint
@@ -78,7 +78,7 @@ build/envs/lint: requirements-lint.txt
 
 clean:
 	@rm -rf build
-	@rm -rf deps_tracker.egg-info
+	@rm -rf trackdeps.egg-info
 
 
 # Help message
@@ -86,7 +86,7 @@ clean:
 help:
 	@echo "Available targets:  (default is 'build')"
 	@echo "- build       Create the .tar.gz and .whl packages"
-	@echo "- install     Install deps-tracker in the current environment"
+	@echo "- install     Install trackdeps in the current environment"
 	@echo "- devel       Setup the development environment"
 	@echo "- lint        Check for code quality"
 	@echo "- clean       Clean up the source directory"

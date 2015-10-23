@@ -3,19 +3,16 @@
 
 .. _install:
 
-============================
-Installation of deps-tracker
-============================
+=========================
+Installation of trackdeps
+=========================
 
-deps-tracker is available `on the Python Packages Index`_, so you can install
-it really easily with the `pip`_ command-line utility. Before installing it, be
+trackdeps is available `on the Python Packages Index`_, so you can install it
+really easily with the `pip`_ command-line utility. Before installing it, be
 sure to have Python_ 3.4 (or a newer version), pip_, virtualenv_ and
 setuptools_ installed on your system. Then, issue the following command::
 
-   $ python3 -m pip install deps-tracker
-
-Perfect, deps-tracker is now installed! Now, you can follow the
-":ref:`quickstart`" chapter if you want to create a bot right now!
+   $ python3 -m pip install trackdeps
 
 .. _install-edge:
 
@@ -23,11 +20,11 @@ Living on the edge
 ==================
 
 If you don't mind having some instability or bugs, and you want the latest
-features not yet released, you can clone the `deps-tracker git repository`_,
+features not yet released, you can clone the `trackdeps git repository`_,
 `install virtualenv`_ and execute the installation from source::
 
-   $ git clone https://github.com/pietroalbini/deps-tracker.git
-   $ cd deps-tracker
+   $ git clone https://github.com/pietroalbini/trackdeps.git
+   $ cd trackdeps
    $ make
    $ make install
 
@@ -67,8 +64,8 @@ by calling the ``deactivate`` command::
 Troubleshooting
 ===============
 
-You might encour some errors while installing deps-tracker. Here is explained
-how to fix the most recurring ones:
+You might encour some errors while installing trackdeps. Here is explained how
+to fix the most recurring ones:
 
 Insufficient permissions
 ------------------------
@@ -78,18 +75,18 @@ something globally. In this case, you can ask your system administrator to
 execute the above command, or you can wrap the command with sudo, if you are
 allowed to do so::
 
-   $ sudo python3 -m pip install deps-tracker
+   $ sudo python3 -m pip install trackdeps
 
 If you installed from source, you need to use this command instead of the last
 one::
 
    $ sudo make install
 
-.. _on the Python Packages Index: https://pypi.python.org/pypi/deps-tracker
+.. _on the Python Packages Index: https://pypi.python.org/pypi/trackdeps
 .. _pip: https://pip.pypa.io
 .. _Python: https://www.python.org
 .. _setuptools: https://setuptools.pypa.io
-.. _deps-tracker git repository: https://github.com/pietroalbini/deps-tracker
+.. _trackdeps git repository: https://github.com/pietroalbini/trackdeps
 .. _virtualenv: https://virtualenv.pypa.io
 .. _install virtualenv: https://virtualenv.pypa.io/en/latest/installation.html
 

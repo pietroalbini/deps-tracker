@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-    deps-tracker's config file
+    trackdeps's config file
 
     Copyright (c) 2015 Pietro Albini <pietro@pietroalbini.io>
     Released under the MIT license
@@ -18,7 +18,7 @@ templates_path = ["_templates"]
 source_suffix = ".rst"
 master_doc = "index"
 
-project = "deps-tracker"
+project = "trackdeps"
 copyright = "2015 Pietro Albini"
 author = "Pietro Albini"
 
@@ -34,7 +34,7 @@ todo_include_todos = False
 
 ## HTML output
 
-html_theme = "deps-tracker"
+html_theme = "trackdeps"
 html_theme_path = ["_themes", pietroalbini_sphinx_themes.themes_path()]
 html_static_path = ["_static"]
 
@@ -65,7 +65,7 @@ latex_elements = {
 }
 
 latex_documents = [
-  (master_doc, "deps-tracker.tex", "deps-tracker Documentation",
+  (master_doc, "trackdeps.tex", "trackdeps Documentation",
    "Pietro Albini", "manual"),
 ]
 
@@ -80,7 +80,7 @@ latex_documents = [
 ## Manpages output
 
 man_pages = [
-    (master_doc, "deps-tracker", "deps-tracker Documentation",
+    (master_doc, "trackdeps", "trackdeps Documentation",
      [author], 1)
 ]
 #man_show_urls = False
@@ -89,8 +89,8 @@ man_pages = [
 ## Texinfo output
 
 texinfo_documents = [
-  (master_doc, "deps-tracker", "deps-tracker Documentation",
-   author, "deps-tracker", "One line description of project.",
+  (master_doc, "trackdeps", "trackdeps Documentation",
+   author, "trackdeps", "One line description of project.",
    "Miscellaneous"),
 ]
 #texinfo_appendices = []

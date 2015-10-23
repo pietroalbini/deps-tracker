@@ -1,5 +1,5 @@
 """
-    deps_tracker.parser
+    trackdeps.parser
     Parse requirements.txt and setup.py
 
     Copyright (c) 2015 Pietro Albini <pietro@pietroalbini.io>

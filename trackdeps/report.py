@@ -1,6 +1,6 @@
 """
-    deps_tracker.report
-    Report generator for deps-tracker
+    trackdeps.report
+    Report generator for trackdeps
 
     Copyright (c) 2015 Pietro Albini <pietro@pietroalbini.io>
     Released under the MIT license

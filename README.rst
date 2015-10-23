@@ -1,4 +1,4 @@
-deps-tracker
-~~~~~~~~~~~~
+trackdeps
+~~~~~~~~~
 
 **Work in progress**

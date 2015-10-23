@@ -1,5 +1,5 @@
 """
-    deps_tracker.tracker
+    trackdeps.tracker
     Track dependencies versions and which one needs updates
 
     Copyright (c) 2015 Pietro Albini <pietro@pietroalbini.io>

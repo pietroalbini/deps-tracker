@@ -4,9 +4,9 @@
 import setuptools
 
 setuptools.setup(
-    name = "deps-tracker",
+    name = "trackdeps",
     version = "1.0",
-    url = "http://deps-tracker.pietroalbini.io",
+    url = "http://trackdeps.pietroalbini.io",
 
     license = 'MIT',
 
@@ -25,7 +25,7 @@ setuptools.setup(
     ],
 
     packages = [
-        'deps_tracker',
+        'trackdeps',
     ],
 
     zip_safe = False,

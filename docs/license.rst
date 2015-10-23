@@ -5,9 +5,9 @@
 The MIT license
 ===============
 
-deps-tracker is released under the MIT license. This means you can use it as
-you want, change it and redistribute it, but you must keep the following
-copyright notice:
+trackdeps is released under the MIT license. This means you can use it as you
+want, change it and redistribute it, but you must keep the following copyright
+notice:
 
 ::
 
