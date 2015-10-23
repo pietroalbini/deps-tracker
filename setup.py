@@ -28,6 +28,12 @@ setuptools.setup(
         'trackdeps',
     ],
 
+    entry_points = {
+        "console_scripts": [
+            "trackdeps-report = trackdeps.__main__:cli",
+        ],
+    },
+
     zip_safe = False,
 
     classifiers=[

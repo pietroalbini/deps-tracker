@@ -107,7 +107,7 @@ def render_report(deps):
     return htmlmin.minify.html_minify(res)
 
 
-def generate(config, output):
+def generate(config, output, force=False):
     """Generate a new report"""
     config = os.path.expanduser(config)
     output = os.path.expanduser(output)
@@ -117,7 +117,7 @@ def generate(config, output):
         raise GenerationError("Configuration file %s not found" % config)
 
     # Don't override existing files, thx
-    if os.path.exists(output):
+    if os.path.exists(output) and not force:
         raise GenerationError("The output file %s already exists!" % output)
 
     tracked = track_deps(config)
