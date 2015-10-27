@@ -20,6 +20,7 @@ Introduction to trackdeps
    :maxdepth: 2
 
    install
+   reports
 
 Side notes
 ==========

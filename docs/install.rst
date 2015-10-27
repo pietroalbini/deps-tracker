@@ -9,7 +9,7 @@ Installation of trackdeps
 
 trackdeps is available `on the Python Packages Index`_, so you can install it
 really easily with the `pip`_ command-line utility. Before installing it, be
-sure to have Python_ 3.4 (or a newer version), pip_, virtualenv_ and
+sure to have Python_ 3.3 (or a newer version), pip_, virtualenv_ and
 setuptools_ installed on your system. Then, issue the following command::
 
    $ python3 -m pip install trackdeps
