@@ -21,12 +21,11 @@ Living on the edge
 
 If you don't mind having some instability or bugs, and you want the latest
 features not yet released, you can clone the `trackdeps git repository`_,
-`install virtualenv`_ and execute the installation from source::
+install `virtualenv`_, `invoke`_ and execute the installation from source::
 
    $ git clone https://github.com/pietroalbini/trackdeps.git
    $ cd trackdeps
-   $ make
-   $ make install
+   $ invoke install
 
 Remember that something can change without notice, and even be removed, until
 the feature is released, so don't use a non-released version in production.
@@ -88,5 +87,6 @@ one::
 .. _setuptools: https://setuptools.pypa.io
 .. _trackdeps git repository: https://github.com/pietroalbini/trackdeps
 .. _virtualenv: https://virtualenv.pypa.io
+.. _invoke: http://www.pyinvoke.org
 .. _install virtualenv: https://virtualenv.pypa.io/en/latest/installation.html
 
