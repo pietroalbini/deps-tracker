@@ -35,6 +35,7 @@ setuptools.setup(
     },
 
     zip_safe = False,
+    include_package_data = True,
 
     classifiers=[
         "Environment :: Console",
