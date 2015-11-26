@@ -8,7 +8,7 @@ Installation of trackdeps
 =========================
 
 trackdeps is available `on the Python Packages Index`_, so you can install it
-really easily with the `pip`_ command-line utility. Before installing it, be
+really easily with the `pip`_ command-line utility. Before installing it, make
 sure to have Python_ 3.3 (or a newer version), pip_, virtualenv_ and
 setuptools_ installed on your system. Then, issue the following command::
 
@@ -35,7 +35,7 @@ the feature is released, so don't use a non-released version in production.
 About virtual environments
 ==========================
 
-Installing Python packages globally isn't a good practice. The big part of the
+Installing Python packages globally isn't a good practice. The most part of the
 Python community solves this problem with a tool called virtualenv_, which
 creates a small, isolated Python installation for each project. This allows you
 to experiment in a project without affecting other ones.
