@@ -13,7 +13,7 @@ versions:
     source:
       provider: git
       url: .
-      checkout: v1.0
+      checkout: v1.0.1
     directory: docs
     title: trackdeps 1.0
     notice: null

@@ -14,6 +14,6 @@ Here you can find what changed in each release of trackdeps.
 trackdeps 1.0.1
 ===============
 
-Bugfix release, not yet released.
+Bugfix release, released on 26/11/2015.
 
 * Packages now contains static assets.
