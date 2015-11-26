@@ -13,6 +13,7 @@ import shutil
 import glob
 import base64
 import time
+import sys
 
 import yaml
 import jinja2
@@ -117,10 +118,15 @@ def generate(config, output, force=False):
         raise GenerationError("Configuration file %s not found" % config)
 
     # Don't override existing files, thx
-    if os.path.exists(output) and not force:
+    if output != "-" and os.path.exists(output) and not force:
         raise GenerationError("The output file %s already exists!" % output)
 
     tracked = track_deps(config)
     rendered = render_report(tracked)
-    with open(output, "w") as f:
-        f.write(rendered)
+
+    # - is the standard output
+    if output == "-":
+        sys.stdout.write(rendered)
+    else:
+        with open(output, "w") as f:
+            f.write(rendered)

@@ -63,9 +63,9 @@ sure trackdeps is :ref:`installed correctly <install>`)::
 
    $ trackdeps-report path/to/config.yml
 
-The report will be saved at ``output.html`` in the current directory. If you
-want to save it in a custom location you can use the ``-o`` flag. The command
-also refuses to overwrite an existing file, but you can disable this behavior
-with the ``-f`` flag::
+The report will dumped to the standard output. If you want to save it in a
+custom location you can use the ``-o`` flag. The command also refuses to
+overwrite an existing file, but you can disable this behavior with the ``-f``
+flag::
 
    $ trackdeps-report path/to/config.yml -o custom/output.html -f

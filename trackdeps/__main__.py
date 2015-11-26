@@ -14,7 +14,7 @@ from . import report
 @click.command()
 @click.argument("config")
 @click.option("-o", "--output", help="Set the output directory",
-              default="output.html")
+              default="-")
 @click.option("-f", "--force", help="Override existing output file",
               is_flag=True)
 def cli(config, output, force):
