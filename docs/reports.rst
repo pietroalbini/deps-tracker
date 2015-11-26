@@ -18,8 +18,8 @@ file to your webserver's document root.
 The configuration file
 ======================
 
-Reports are generated using a :ref:`YAML <yaml-basics>` configuration file,
-which defines where to look for pinned dependencies.
+Reports are generated using a YAML configuration file, which defines where to
+look for pinned dependencies.
 
 Let's say we have two git repositories (``repo1`` for *project1* and ``repo2``
 for *project2* hosted on ``git.example.com``), and each of them has pinned
