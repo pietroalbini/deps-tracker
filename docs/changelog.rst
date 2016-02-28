@@ -14,7 +14,7 @@ Here you can find what changed in each release of trackdeps.
 trackdeps 1.0.2
 ===============
 
-*Bugfix release, not yet released.*
+*Bugfix release, released on February 28th, 2016.*
 
 * Pre-releases are not tracked anymore.
 * Order dependencies and projects alphabetically.
