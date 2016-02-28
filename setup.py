@@ -5,7 +5,7 @@ import setuptools
 
 setuptools.setup(
     name = "trackdeps",
-    version = "1.0.1",
+    version = "1.1.dev0",
     url = "http://trackdeps.pietroalbini.io",
 
     license = 'MIT',
