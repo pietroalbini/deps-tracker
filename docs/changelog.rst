@@ -17,6 +17,7 @@ trackdeps 1.0.2
 *Bugfix release, not yet released.*
 
 * Pre-releases are not tracked anymore.
+* Order dependencies and projects alphabetically.
 
 .. _trackdeps-1.0.1:
 

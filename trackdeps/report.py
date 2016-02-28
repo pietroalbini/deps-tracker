@@ -84,6 +84,7 @@ def render_report(deps):
         if not len(dep.requires_updates):
             continue
         requires_updates.append(dep)
+    requires_updates.sort(key=lambda i: i.package)
 
     # Get the minified stylesheet
     with open(os.path.join(base, "style.css")) as f:

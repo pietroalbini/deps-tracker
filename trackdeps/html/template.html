@@ -31,10 +31,10 @@
                             {{ dependency.latest_update|format_day }}.
                         </p>
                         <ul>
-                            {% for project, files in dependency.requires_updates.items() %}
+                            {% for project in dependency.requires_updates.keys()|sort %}
                                 <li>
                                     <b>{{ project }}</b> needs to be updated on
-                                    {% for file in files %}
+                                    {% for file in dependency.requires_updates[project] %}
                                         {% if loop.revindex == 2 %}
                                             {% set suffix = " and " %}
                                         {% elif loop.revindex == 1 %}
