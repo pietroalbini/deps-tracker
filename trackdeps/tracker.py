@@ -9,7 +9,7 @@
 import datetime
 
 import requests
-from packaging import specifiers
+from packaging import specifiers, version
 
 from . import parser
 
@@ -67,7 +67,24 @@ class Dependency:
             raise UnknowDependency("Can't find "+self.package+" on PyPI")
         content = response.json()
 
-        self.latest_release = content["info"]["version"]
+        # Calculate the latest release
+        # The one provided by PyPI is not used to avoid tracking pre-releases,
+        # but if errors are found while parsing the versions, that will be used
+        # as a fallback
+        try:
+            releases = [version.Version(r) for r in content["releases"].keys()]
+            latest = None
+            for release in releases:
+                # Skip pre-releases
+                if release.is_prerelease:
+                    continue
+
+                if latest is None or release > latest:
+                    latest = release
+        except version.InvalidVersion:
+            latest = content["info"]["version"]
+
+        self.latest_release = str(latest)
         uploaded = content["releases"][self.latest_release][0]["upload_time"]
         converted = datetime.datetime.strptime(uploaded, "%Y-%m-%dT%H:%M:%S")
         self.latest_update = converted.timestamp()

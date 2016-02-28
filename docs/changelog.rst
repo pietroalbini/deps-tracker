@@ -9,6 +9,15 @@ trackdeps changelog
 
 Here you can find what changed in each release of trackdeps.
 
+.. _trackdeps-1.0.2:
+
+trackdeps 1.0.2
+===============
+
+*Bugfix release, not yet released.*
+
+* Pre-releases are not tracked anymore.
+
 .. _trackdeps-1.0.1:
 
 trackdeps 1.0.1
