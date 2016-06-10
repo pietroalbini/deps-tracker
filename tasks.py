@@ -14,6 +14,12 @@ import re
 import invoke
 
 
+# This is because invoke can't keep backward compatibility...
+_invoke_v = invoke.__version__.split(".")
+if int(_invoke_v[0]) == 0 and int(_invoke_v[1]) <= 12:
+    invoke.task = invoke.ctask
+
+
 BASE = os.path.dirname(__file__)
 PYTHON = "python3"
 PROJECT = "trackdeps"
@@ -49,7 +55,7 @@ def remove_dir_content(path):
 
 
 @invoke.task
-def clean():
+def clean(ctx):
     """Clean all the build things"""
     for dir in "build", "%s.egg-info" % PROJECT:
         path = os.path.join(BASE, dir)
@@ -93,13 +99,13 @@ def clean():
 
 
 @invoke.task
-def devel():
+def devel(ctx):
     """Setup the development environment"""
     create_env("devel", self=True, force=True)
 
 
 @invoke.task
-def build():
+def build(ctx):
     """Create a new build"""
     env = create_env("build", requirements=True)
 
@@ -112,7 +118,7 @@ def build():
 
 
 @invoke.task(pre=[build])
-def install():
+def install(ctx):
     """Install the program on this environment"""
     invoke.run("python3 -m pip install --upgrade build/packages/*whl")
 
@@ -123,7 +129,7 @@ def install():
 
 
 @invoke.task
-def lint():
+def lint(ctx):
     """Lint the source code"""
     env = create_env("lint", requirements=True)
 
@@ -136,7 +142,7 @@ def lint():
 
 
 @invoke.task
-def docs():
+def docs(ctx):
     """Build the documentation"""
     env = create_env("docs", requirements=True)
 
@@ -146,3 +152,33 @@ def docs():
 
     invoke.run("%s/bin/buildthedocs %s/buildthedocs.yml -o %s" %
                (env, docs_dir, build_dir))
+
+
+#
+# Pinned dependencies management
+#
+
+
+@invoke.task(name="deps-sync")
+def deps_sync(ctx):
+    """Sync dependencies versions"""
+    env = create_env("tools", requirements=True)
+
+    for env_name in os.listdir(os.path.join(BASE, "build", "envs")):
+        req = os.path.join(BASE, "requirements-%s.txt" % env_name)
+        if not os.path.exists(req):
+            continue
+
+        sub_env = os.path.join(BASE, "build", "envs", env_name)
+        invoke.run("VIRTUAL_ENV=%s %s/bin/pip-sync %s/requirements-%s.txt"
+                   % (sub_env, env, BASE, env_name), pty=True)
+
+
+@invoke.task(name="deps-compile")
+def deps_compile(ctx):
+    """Compile new requirements-*.txt"""
+    env = create_env("tools", requirements=True)
+
+    for file in glob.glob(os.path.join(BASE, "requirements-*.in")):
+        invoke.run("%s/bin/pip-compile %s > %s" % (env, os.path.abspath(file),
+                   os.path.abspath(file)[:-3] + ".txt"))
