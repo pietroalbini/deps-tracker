@@ -2,8 +2,10 @@
 trackdeps
 ~~~~~~~~~
 
-.. image:: https://img.shields.io/travis/pietroalbini/trackdeps/master.svg
-   :target: https://travis-ci.org/pietroalbini/trackdeps
+**Warning:** this project is not maintained anymore, but there are a bunch of
+alternatives around the web if you need them.
+
+----
 
 trackdeps is a Python dependencies tracking library, written in Python 3. It
 provides a list of dependencies used by your projects, which ones needs to be
@@ -13,10 +15,8 @@ You can use it both as a library for other projects, or to directly generate
 reports with the built-in command-line utility. The whole project is released
 under the MIT license.
 
-Please refer to the `documentation`_ if you need more information about how to
+Please refer to the documentation if you need more information about how to
 use trackdeps.
-
-.. _documentation: https://trackdeps.pietroalbini.io
 
 Installation
 ============
